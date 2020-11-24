@@ -40,7 +40,7 @@ public class UserRegistrationController {
 			System.out.println("ID: " + user.getId());
 			return new ResponseEntity<Object>(UserAutheticatedDTO.toDTO(user, "Bearer "), HttpStatus.CREATED);
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("NÃO FOI POSSÍVEL REALIZAR O CADASTRO");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("NÃO FOI POSSÍVEL CADASTRAR O USUÁRIO");
 		}
 
 	}

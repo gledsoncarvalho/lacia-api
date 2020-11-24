@@ -30,8 +30,6 @@ public class User {
     private Date dataNascimento;
     @Column
     private String cpf;
-    @Column
-    private int status;
     @Column(name = "tipo")
     private char tipoUsuario;
     @Column
@@ -47,14 +45,13 @@ public class User {
         this.senha = senha;
     }
 
-    public User(Integer id, String nome, String email, String senha, String telefone, char tipoUsuario, int status, String cpf, byte[] fotoPerfil, Date dataNascimento){
+    public User(Integer id, String nome, String email, String senha, String telefone, char tipoUsuario, String cpf, byte[] fotoPerfil, Date dataNascimento){
         this.id = id;
     	this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.telefone = telefone;
         this.tipoUsuario = tipoUsuario;
-        this.status = status;
         this.cpf = cpf;
         this.fotoPerfil = fotoPerfil;
         this.dataNascimento = dataNascimento;

@@ -14,7 +14,6 @@ public class UserRegistrationDTO extends User {
     private String senha;
     private String telefone;
     private char tipo;
-    private int status;
     private String cpf;
     private byte[] fotoPerfil;
     private Date dataNascimento;
@@ -24,20 +23,19 @@ public class UserRegistrationDTO extends User {
 
     }
 
-    public UserRegistrationDTO(String nome, String email, String senha, String telefone, char tipo, int status, String cpf, byte[] fotoPerfil, Date dataNascimento) {
+    public UserRegistrationDTO(String nome, String email, String senha, String telefone, char tipo, String cpf, byte[] fotoPerfil, Date dataNascimento) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.telefone = telefone;
         this.tipo = tipo;
-        this.status = status;
         this.cpf = cpf;
         this.fotoPerfil = fotoPerfil;
         this.dataNascimento = dataNascimento;
     }
 
     public User toUser() {
-        return new User(getId(), getNome(), getEmail(), getSenha(), getTelefone(), getTipo(), getStatus(), getCpf(), getFotoPerfil(), getDataNascimento());
+        return new User(getId(), getNome(), getEmail(), getSenha(), getTelefone(), getTipo(), getCpf(), getFotoPerfil(), getDataNascimento());
     }
 
 
@@ -90,13 +88,6 @@ public class UserRegistrationDTO extends User {
 		this.tipo = tipo;
 	}
 
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
-	}
 
 	public String getCpf() {
 		return cpf;
