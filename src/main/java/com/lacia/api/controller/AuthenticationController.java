@@ -3,6 +3,7 @@ package com.lacia.api.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,10 +35,12 @@ public class AuthenticationController {
 
     }
     
+    @CrossOrigin
     @PostMapping("/login")
     public ResponseEntity<Object> autenticar(@RequestBody DadosLogin dadosLogin){
     	try {
     		User user = userAuthenticationService.authenticate(dadosLogin);
+    		System.out.println(user.getTipoUsuario());
             return new ResponseEntity<Object>(UserAutheticatedDTO.toDTO(user, "Bearer "), HttpStatus.ACCEPTED);
     	} catch (Exception e) {
     		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("USUÁRIO INVÁLIDO");
