@@ -18,18 +18,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lacia.api.dto.UserAutheticatedDTO;
 import com.lacia.api.dto.UserDTO;
+import com.lacia.api.dto.UserPasswordDTO;
 import com.lacia.api.dto.UserRegistrationDTO;
 import com.lacia.api.model.User;
+import com.lacia.api.service.TokenService;
 import com.lacia.api.service.UserRegistrationService;
 
 @RestController
 public class UserRegistrationController {
 
 	private UserRegistrationService userRegistrationService;
+	private TokenService tokenService;
 
 	@Autowired
-	public UserRegistrationController(UserRegistrationService userRegistrationService) {
+	public UserRegistrationController(UserRegistrationService userRegistrationService, TokenService tokenService) {
 		this.userRegistrationService = userRegistrationService;
+		this.tokenService = tokenService;
 	}
 
 	public UserRegistrationController() {
@@ -87,10 +91,22 @@ public class UserRegistrationController {
 	public ResponseEntity<Object> atualizarImagem(@PathVariable("idUsuario") Integer idUsuario, @RequestBody byte[] fotoPerfil,
 			@RequestHeader String Authorization) {
 		try {
-			this.userRegistrationService.atualizarImagem(idUsuario, fotoPerfil, Authorization);
-			return ResponseEntity.status(HttpStatus.OK).body(true);
+			User user = this.userRegistrationService.atualizarImagem(idUsuario, fotoPerfil, Authorization);
+            return new ResponseEntity<Object>(UserAutheticatedDTO.toDTO(user, "Bearer "), HttpStatus.ACCEPTED);
 		} catch (Exception e) {
 			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+		}
+	}
+	
+	@CrossOrigin
+	@PutMapping("/usuario/senha/{idUsuario}")
+	public ResponseEntity<Object> atualizarSenha(@PathVariable("idUsuario") Integer idUsuario, @RequestBody UserPasswordDTO userPasswordDTO,
+			@RequestHeader String Authorization) {
+		try {
+			this.userRegistrationService.atualizarSenha(idUsuario, userPasswordDTO, Authorization);
+			return ResponseEntity.status(HttpStatus.OK).body(true);
+		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 		}
 	}

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lacia.api.dto.UserDTO;
+import com.lacia.api.dto.UserPasswordDTO;
 import com.lacia.api.dto.UserRegistrationDTO;
 import com.lacia.api.exception.InvalidLoginException;
 import com.lacia.api.model.User;
@@ -39,6 +40,7 @@ public class UserRegistrationService {
 			user.setEmail(usuario.getEmail());
 			user.setDataNascimento(usuario.getDataNascimento());
 			user.setCpf(usuario.getCpf());
+			user.setToken(tokenService.generateToken(user));
 			return userRepository.save(user);
 		} else {
 			throw new Exception();
@@ -65,11 +67,26 @@ public class UserRegistrationService {
 		}
 	}
 	
-	public void atualizarImagem(Integer id, byte[] fotoPerfil, String token) throws Exception {
+	public User atualizarImagem(Integer id, byte[] fotoPerfil, String token) throws Exception {
 		if (!token.isEmpty() && tokenService.validate(token)) {
 			User user = userRepository.findId(id);
 		    user.setFotoPerfil(fotoPerfil);
-		    userRepository.save(user);
+			user.setToken(tokenService.generateToken(user));
+		    return userRepository.save(user);
+		} else {
+			throw new Exception();
+		}
+	}
+	
+	public void atualizarSenha(Integer id, UserPasswordDTO usuario, String token) throws Exception {
+		if (!token.isEmpty() && tokenService.validate(token)) {
+			User user = userRepository.findByIdAndPassword(id, usuario.getSenhaAtual());
+			if (user != null) {
+				user.setSenha(usuario.getNovaSenha());
+				user = userRepository.save(user);
+			} else {
+				throw new Exception();
+			}
 		} else {
 			throw new Exception();
 		}

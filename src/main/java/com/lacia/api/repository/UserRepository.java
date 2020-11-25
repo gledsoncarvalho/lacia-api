@@ -17,4 +17,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     
     @Query("select u from User u where u.tipoUsuario = :tipoUsuario")
     List<User> findByTipo(@Param("tipoUsuario") char tipoUsuario);
+    
+    @Query("select u from User u where u.idUsuario = :idUsuario and u.senha = :senha")
+    User findByIdAndPassword(@Param("idUsuario") Integer idUsuario, @Param("senha") String senha);
 }
