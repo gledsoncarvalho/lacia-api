@@ -6,7 +6,7 @@ import com.lacia.api.model.User;
 
 public class UserDTO {
 
-	private int id;
+	private int idUsuario;
 	private String nome;
 	private String email;
 	private char tipoUsuario;
@@ -16,8 +16,8 @@ public class UserDTO {
 	
 	public UserDTO() { }
 	
-	public UserDTO(int id, String nome, String email, char tipo, String cpf, Date dataNascimento, String telefone) {
-		this.id = id;
+	public UserDTO(int idUsuario, String nome, String email, char tipo, String cpf, Date dataNascimento, String telefone) {
+		this.idUsuario = idUsuario;
 		this.nome = nome;
 		this.email = email;
 		this.tipoUsuario = tipo;
@@ -26,17 +26,21 @@ public class UserDTO {
 		this.telefone = telefone;
 	}
 	
+    public User toUser() {
+        return new User(getIdUsuario(), getNome(), getEmail(),  getTelefone(), getDataNascimento());
+    }
+
 
     public static UserDTO toDTO(User user) {
-        return new UserDTO(user.getId(), user.getNome(), user.getEmail(), user.getTipoUsuario(), user.getCpf(), user.getDataNascimento(), user.getTelefone());
+        return new UserDTO(user.getIdUsuario(), user.getNome(), user.getEmail(), user.getTipoUsuario(), user.getCpf(), user.getDataNascimento(), user.getTelefone());
     }
     
-	public int getId() {
-		return id;
+	public int getIdUsuario() {
+		return idUsuario;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
 	public String getNome() {

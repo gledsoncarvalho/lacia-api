@@ -12,6 +12,9 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Integer> {
     User findByEmail(String email);
     
+    @Query("select u from User u where u.idUsuario = :idUsuario")
+    User findId(@Param("idUsuario") Integer idUsuario);
+    
     @Query("select u from User u where u.tipoUsuario = :tipoUsuario")
     List<User> findByTipo(@Param("tipoUsuario") char tipoUsuario);
 }

@@ -2,8 +2,10 @@ package com.lacia.api.model;
 
 import java.sql.Date;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,7 +19,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idUsuario;
     @Column
 	private String nome;
     @Column
@@ -35,18 +37,29 @@ public class User {
     @Column
     @Lob
     private byte[] fotoPerfil;
+    @Column
+    private boolean isAprovado;
     @Transient
     private String token;
+    
+    public User(Integer idUsuario, String nome, String email, String telefone, Date dataNascimento) {
+    	this.idUsuario = idUsuario;
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+        this.dataNascimento = dataNascimento;
+    }
 
-    public User(Integer id, String nome, String email, String senha){
-        this.id = id;
+    
+	public User(Integer idUsuario, String nome, String email, String senha){
+        this.idUsuario = idUsuario;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
     }
 
-    public User(Integer id, String nome, String email, String senha, String telefone, char tipoUsuario, String cpf, byte[] fotoPerfil, Date dataNascimento){
-        this.id = id;
+    public User(Integer idUsuario, String nome, String email, String senha, String telefone, char tipoUsuario, String cpf, byte[] fotoPerfil, Date dataNascimento){
+        this.idUsuario = idUsuario;
     	this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -85,12 +98,12 @@ public class User {
         this.senha = senha;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public void setToken(String token) {
@@ -140,6 +153,14 @@ public class User {
 
 	public void setFotoPerfil(byte[] fotoPerfil) {
 		this.fotoPerfil = fotoPerfil;
+	}
+	
+    public boolean isAprovado() {
+		return isAprovado;
+	}
+
+	public void setAprovado(boolean isAprovado) {
+		this.isAprovado = isAprovado;
 	}
 
 

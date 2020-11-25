@@ -4,6 +4,7 @@ package com.lacia.api.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lacia.api.dto.UserDTO;
 import com.lacia.api.dto.UserRegistrationDTO;
 import com.lacia.api.exception.InvalidLoginException;
 import com.lacia.api.model.User;
@@ -30,9 +31,15 @@ public class UserRegistrationService {
 		}
 	}
 
-	public User atualizar(UserRegistrationDTO usuario, String token) throws Exception {
+	public User atualizar(UserDTO usuario, String token) throws Exception {
 		if (!token.isEmpty() && tokenService.validate(token)) {
-			return userRepository.save(usuario.toUser());
+			User user = userRepository.findId(usuario.getIdUsuario());
+			user.setNome(usuario.getNome());
+			user.setTelefone(usuario.getTelefone());
+			user.setEmail(usuario.getEmail());
+			user.setDataNascimento(usuario.getDataNascimento());
+			user.setCpf(usuario.getCpf());
+			return userRepository.save(user);
 		} else {
 			throw new Exception();
 		}
@@ -50,10 +57,22 @@ public class UserRegistrationService {
 	public User obterUsuario(String email, String token) throws Exception {
 		System.out.println("email:: " + email);
 		if (!token.isEmpty() && tokenService.validate(token)) {
+			System.out.println("ENTROU");
 			User user = userRepository.findByEmail(email);
 			return user;
 		} else {
 			throw new Exception();
 		}
 	}
+	
+	public void atualizarImagem(Integer id, byte[] fotoPerfil, String token) throws Exception {
+		if (!token.isEmpty() && tokenService.validate(token)) {
+			User user = userRepository.findId(id);
+		    user.setFotoPerfil(fotoPerfil);
+		    userRepository.save(user);
+		} else {
+			throw new Exception();
+		}
+	}
+	
 }

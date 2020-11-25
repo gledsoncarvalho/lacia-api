@@ -40,7 +40,6 @@ public class AuthenticationController {
     public ResponseEntity<Object> autenticar(@RequestBody DadosLogin dadosLogin){
     	try {
     		User user = userAuthenticationService.authenticate(dadosLogin);
-    		System.out.println(user.getTipoUsuario());
             return new ResponseEntity<Object>(UserAutheticatedDTO.toDTO(user, "Bearer "), HttpStatus.ACCEPTED);
     	} catch (Exception e) {
     		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("USUÁRIO INVÁLIDO");
