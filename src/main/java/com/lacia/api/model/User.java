@@ -70,6 +70,15 @@ public class User {
         this.dataNascimento = dataNascimento;
     }
 
+    public User(Integer idUsuario, String nome, String email, String telefone, Date dataNascimento, String cpf) {
+    	this.idUsuario = idUsuario;
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+        this.dataNascimento = dataNascimento;
+        this.cpf = cpf;
+    }
+    
     public User(){
 
     }

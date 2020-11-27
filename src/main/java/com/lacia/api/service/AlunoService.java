@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lacia.api.dto.UserDTO;
+import com.lacia.api.exception.InvalidLoginException;
 import com.lacia.api.model.User;
 import com.lacia.api.repository.UserRepository;
 
@@ -37,4 +38,23 @@ public class AlunoService {
 			throw new Exception();
 		}
     }
+    
+    public void excluirAluno(Integer idUsuario, String token) throws Exception {
+		if (!token.isEmpty() && tokenService.validate(token)) {
+			userRepository.deleteById(idUsuario);
+		} else {
+			throw new Exception();
+		}
+	}
+    
+    public User cadastrar(User user, String token) throws Exception {
+		if (!token.isEmpty() && tokenService.validate(token)) {
+			user.setSenha("lacia123");
+			user.setAprovado(true);
+			user.setTipoUsuario('A');
+			return userRepository.save(user);
+		} else {
+			throw new Exception();
+		}
+	}
 }
