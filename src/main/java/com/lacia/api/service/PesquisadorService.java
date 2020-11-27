@@ -21,21 +21,56 @@ public class PesquisadorService {
 		this.userRepository = userRepository;
 		this.tokenService = tokenService;
 	}
-	
 
-    public List<UserDTO> obterTodosPesquisadores(String token) throws Exception {
-    	if (!token.isEmpty() && tokenService.validate(token)) {
-    		Iterator iterator = userRepository.findByTipo('P').iterator();
-        	List<UserDTO> usuarios = new ArrayList<>();
-        	while(iterator.hasNext()) {
-        		User usuario = (User) iterator.next();
-        		usuarios.add(UserDTO.toDTO(usuario));
-        	}
-        	return usuarios;
+	public List<UserDTO> obterTodosPesquisadoresAprovados(String token) throws Exception {
+		if (!token.isEmpty() && tokenService.validate(token)) {
+			Iterator iterator = userRepository.findByTipo('P').iterator();
+			List<UserDTO> usuarios = new ArrayList<>();
+			while (iterator.hasNext()) {
+				User usuario = (User) iterator.next();
+				usuarios.add(UserDTO.toDTO(usuario));
+			}
+			return usuarios;
 		} else {
 			throw new Exception();
 		}
-    }
+	}
+
+	public List<UserDTO> obterTodosPesquisadores(String token) throws Exception {
+		if (!token.isEmpty() && tokenService.validate(token)) {
+			Iterator iterator = userRepository.findAll('P').iterator();
+			List<UserDTO> usuarios = new ArrayList<>();
+			while (iterator.hasNext()) {
+				User usuario = (User) iterator.next();
+				usuarios.add(UserDTO.toDTO(usuario));
+			}
+			return usuarios;
+		} else {
+			throw new Exception();
+		}
+	}
+
+	public void reprovarPesquisador(Integer idUsuario, String token) throws Exception {
+		if (!token.isEmpty() && tokenService.validate(token)) {
+			userRepository.reproveUser(idUsuario);
+		} else {
+			throw new Exception();
+		}
+	}
+
+	public void aprovarPesquisador(Integer idUsuario, String token) throws Exception {
+		if (!token.isEmpty() && tokenService.validate(token)) {
+			userRepository.approveUser(idUsuario);
+		} else {
+			throw new Exception();
+		}
+	}
+
+	public void excluirPesquisador(Integer idUsuario, String token) throws Exception {
+		if (!token.isEmpty() && tokenService.validate(token)) {
+			userRepository.deleteById(idUsuario);
+		} else {
+			throw new Exception();
+		}
+	}
 }
-
-

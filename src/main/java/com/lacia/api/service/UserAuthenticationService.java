@@ -1,5 +1,7 @@
 package com.lacia.api.service;
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +27,15 @@ public class UserAuthenticationService {
 
 	public User authenticate(DadosLogin dados) throws Exception {
 		User user = userRepository.findByEmail(dados.getEmail());
+		System.out.println("a: " + user.isAprovado());
 		if (dados.getSenha().equals(user.getSenha())) {
+			if (Objects.isNull(user.isAprovado()) || !user.isAprovado()) {
+				throw new Exception("E1");
+			}
 			user.setToken(tokenService.generateToken(user));
 			return user;
 		} else {
-			throw new InvalidLoginException();
+			throw new Exception("E2");
 		}
 	}
 

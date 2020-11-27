@@ -38,7 +38,7 @@ public class User {
     @Lob
     private byte[] fotoPerfil;
     @Column
-    private boolean isAprovado;
+    private Boolean isAprovado;
     @Transient
     private String token;
     
@@ -155,11 +155,11 @@ public class User {
 		this.fotoPerfil = fotoPerfil;
 	}
 	
-    public boolean isAprovado() {
+    public Boolean isAprovado() {
 		return isAprovado;
 	}
 
-	public void setAprovado(boolean isAprovado) {
+	public void setAprovado(Boolean isAprovado) {
 		this.isAprovado = isAprovado;
 	}
 

@@ -13,11 +13,12 @@ public class UserDTO {
 	private String cpf;
 	private Date dataNascimento;
 	private String telefone;
+	private Boolean isAprovado;
 	private String token;
 	
 	public UserDTO() { }
 	
-	public UserDTO(int idUsuario, String nome, String email, char tipo, String cpf, Date dataNascimento, String telefone, String token) {
+	public UserDTO(int idUsuario, String nome, String email, char tipo, String cpf, Date dataNascimento, String telefone, Boolean isAprovado, String token) {
 		this.idUsuario = idUsuario;
 		this.nome = nome;
 		this.email = email;
@@ -25,6 +26,7 @@ public class UserDTO {
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;
 		this.telefone = telefone;
+		this.isAprovado = isAprovado;
 		this.token = token;
 	}
 	
@@ -34,7 +36,7 @@ public class UserDTO {
 
 
     public static UserDTO toDTO(User user) {
-        return new UserDTO(user.getIdUsuario(), user.getNome(), user.getEmail(), user.getTipoUsuario(), user.getCpf(), user.getDataNascimento(), user.getTelefone(), user.getToken());
+        return new UserDTO(user.getIdUsuario(), user.getNome(), user.getEmail(), user.getTipoUsuario(), user.getCpf(), user.getDataNascimento(), user.getTelefone(), user.isAprovado(), user.getToken());
     }
     
 	public int getIdUsuario() {
@@ -91,6 +93,14 @@ public class UserDTO {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+	
+	public Boolean getIsAprovado() {
+		return isAprovado;
+	}
+
+	public void setIsAprovado(Boolean isAprovado) {
+		this.isAprovado = isAprovado;
 	}
 
 	public String getToken() {

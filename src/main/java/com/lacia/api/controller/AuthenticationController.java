@@ -42,7 +42,10 @@ public class AuthenticationController {
     		User user = userAuthenticationService.authenticate(dadosLogin);
             return new ResponseEntity<Object>(UserAutheticatedDTO.toDTO(user, "Bearer "), HttpStatus.ACCEPTED);
     	} catch (Exception e) {
-    		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("USUÁRIO INVÁLIDO");
+    		if (e.getMessage().equals("E1")) {
+    			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário sem permissão de acesso!");
+    		}
+    		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário/senha inválido");
 		}	
     }
 }
