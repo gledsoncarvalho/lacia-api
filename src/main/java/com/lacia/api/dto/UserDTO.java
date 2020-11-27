@@ -31,7 +31,7 @@ public class UserDTO {
 	}
 	
     public User toUser() {
-        return new User(getIdUsuario(), getNome(), getEmail(),  getTelefone(), getDataNascimento());
+        return new User(getIdUsuario(), getNome(), getEmail(),  getTelefone(), getDataNascimento(), getCpf());
     }
 
 
