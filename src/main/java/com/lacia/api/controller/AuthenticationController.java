@@ -42,6 +42,7 @@ public class AuthenticationController {
     		User user = userAuthenticationService.authenticate(dadosLogin);
             return new ResponseEntity<Object>(UserAutheticatedDTO.toDTO(user, "Bearer "), HttpStatus.ACCEPTED);
     	} catch (Exception e) {
+    		e.printStackTrace();
     		if (e.getMessage().equals("E1")) {
     			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário sem permissão de acesso!");
     		}
