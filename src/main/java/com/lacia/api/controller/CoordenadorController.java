@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +23,7 @@ public class CoordenadorController {
 		this.coordenadorService = coordenadorService;
 	}
 	
-	
+	@CrossOrigin
 	@GetMapping("/coordenadores")
 	public ResponseEntity<Object> obterTodosCoordenadores(@RequestHeader String Authorization) {
 		try {
