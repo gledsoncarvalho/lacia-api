@@ -59,7 +59,6 @@ public class ProjectService {
 	public List<ProjectDTO> obterProjetos(String email, String token) throws Exception {
 		if (!token.isEmpty() && tokenService.validate(token)) {
 			User user = userRepository.findByEmail(email);
-			System.out.println(email);
 			Iterator iterator = projectRepository.findAll(user.getIdUsuario()).iterator();
 			List<ProjectDTO> projetos = new ArrayList<>();
 			while (iterator.hasNext()) {
@@ -84,6 +83,20 @@ public class ProjectService {
 	public void aprovarProjeto(Integer idProjeto, String token) throws Exception {
 		if (!token.isEmpty() && tokenService.validate(token)) {
 			projectRepository.approveProject(idProjeto);
+		} else {
+			throw new Exception();
+		}
+	}
+	
+	public List<ProjectDTO> obterProjetosCadastrados(String token) throws Exception {
+		if (!token.isEmpty() && tokenService.validate(token)) {
+			Iterator iterator = projectRepository.findAllCadastrados().iterator();
+			List<ProjectDTO> projetos = new ArrayList<>();
+			while (iterator.hasNext()) {
+				Project projeto = (Project) iterator.next();
+				projetos.add(ProjectDTO.toDTO(projeto));
+			}
+			return projetos;
 		} else {
 			throw new Exception();
 		}

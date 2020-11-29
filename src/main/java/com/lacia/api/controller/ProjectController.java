@@ -87,4 +87,15 @@ public class ProjectController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 		}
 	}
+	
+	@CrossOrigin
+	@GetMapping("/projeto/todos")
+	public ResponseEntity<Object> obterProjetosCadastrados (@RequestHeader String Authorization) {
+		try {
+			List<ProjectDTO> projetos = projectService.obterProjetosCadastrados(Authorization);
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(projetos);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERRO AO CONSULTAR OS PROJETOS");
+		}
+	}
 }

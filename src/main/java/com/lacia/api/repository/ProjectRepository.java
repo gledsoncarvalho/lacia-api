@@ -28,4 +28,8 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
     @Modifying
     @Query("update Project p set p.isAprovado = false where p.idProjeto = :idProjeto")
     void reproveProject(@Param("idProjeto") Integer idProjeto);
+    
+    @Query("select p from Project p where p.isAprovado = true")
+    List<Project> findAllCadastrados();
+    
 }
