@@ -45,7 +45,6 @@ public class UserRegistrationController {
 			@RequestHeader String Authorization) {
 		try {
 			User user = userRegistrationService.registrate(userRegistrationDTO.toUser(), Authorization);
-			System.out.println("ID: " + user.getIdUsuario());
 			return new ResponseEntity<Object>(UserAutheticatedDTO.toDTO(user, "Bearer "), HttpStatus.CREATED);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("NÃO FOI POSSÍVEL CADASTRAR O USUÁRIO");
@@ -105,6 +104,28 @@ public class UserRegistrationController {
 			@RequestHeader String Authorization) {
 		try {
 			this.userRegistrationService.atualizarSenha(idUsuario, userPasswordDTO, Authorization);
+			return ResponseEntity.status(HttpStatus.OK).body(true);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+		}
+	}
+	
+	@CrossOrigin
+	@PostMapping("/usuario/solicitacao")
+	public ResponseEntity<Object> solicitarAcessoPesquisador(@RequestBody UserDTO userRegistrationDTO) {
+		try {
+			userRegistrationService.solicitarAcessoPesquisador(userRegistrationDTO);
+			return ResponseEntity.status(HttpStatus.OK).body(true);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+		}
+	}
+	
+	@CrossOrigin
+	@PutMapping("/usuario/senha/recuperar")
+	public ResponseEntity<Object> recuperarSenha(@RequestBody String email) {
+		try {
+			this.userRegistrationService.recuperarSenha(email);
 			return ResponseEntity.status(HttpStatus.OK).body(true);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);

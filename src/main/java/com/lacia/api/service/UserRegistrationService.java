@@ -1,6 +1,8 @@
 package com.lacia.api.service;
 
 
+import java.sql.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,8 @@ import com.lacia.api.dto.UserRegistrationDTO;
 import com.lacia.api.exception.InvalidLoginException;
 import com.lacia.api.model.User;
 import com.lacia.api.repository.UserRepository;
+
+import net.bytebuddy.asm.Advice.Thrown;
 
 @Service
 public class UserRegistrationService {
@@ -88,6 +92,21 @@ public class UserRegistrationService {
 				throw new Exception();
 			}
 		} else {
+			throw new Exception();
+		}
+	}
+	
+	public void solicitarAcessoPesquisador(UserDTO user) throws Exception {
+		User usuario = user.toUser();
+		usuario.setSenha("lacia123");
+		usuario.setTipoUsuario('P');
+		usuario.setDataNascimento(new Date(System.currentTimeMillis()));
+		userRepository.save(usuario);
+	}
+	
+	public void recuperarSenha(String email) throws Exception {
+		User user = userRepository.findByEmail(email);
+		if (user == null) {
 			throw new Exception();
 		}
 	}
