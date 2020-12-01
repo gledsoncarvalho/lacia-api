@@ -2,15 +2,19 @@ package com.lacia.api.model;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -37,6 +41,19 @@ public class Project {
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "usuario_id_usuario")
     private User user;
+    
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "usuario_projeto",
+            joinColumns = {
+                    @JoinColumn(name = "projeto_id_projeto", referencedColumnName = "idProjeto",
+                            nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "usuario_id_usuario", referencedColumnName = "idUsuario",
+                            nullable = false, updatable = false)})
+    private List<User> users = new ArrayList<>();
+    
+    /*@OneToMany(mappedBy = "user1")
+    private List<User> users;*/
 	
     public Project() {
     	
@@ -44,7 +61,6 @@ public class Project {
     
     public Project(Integer idProjeto, String titulo, String descricao, BigDecimal orcamento, Date dataInicio, Date dataFim,
     		Boolean isAprovado, User user) {
-		super();
 		this.idProjeto = idProjeto;
 		this.titulo = titulo;
 		this.descricao = descricao;
@@ -117,5 +133,13 @@ public class Project {
 	
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 }

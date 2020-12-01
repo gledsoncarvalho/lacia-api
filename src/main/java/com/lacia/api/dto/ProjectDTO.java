@@ -2,9 +2,13 @@ package com.lacia.api.dto;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.lacia.api.model.Project;
 import com.lacia.api.model.User;
+
+import net.bytebuddy.asm.Advice.This;
 
 public class ProjectDTO {
 
@@ -16,9 +20,10 @@ public class ProjectDTO {
 	private Date dataFim;
 	private Boolean aprovado;
     private String emailUsuario;
+    private List<UserProjectSaveDTO> usuarios;
     
 	public ProjectDTO(Integer idProjeto, String titulo, String descricao, BigDecimal orcamento, Date dataInicio,
-			Date dataFim, Boolean aprovado, String emailUsuario) {
+			Date dataFim, Boolean aprovado, String emailUsuario, List<UserProjectSaveDTO> usuarios) {
 		this.idProjeto = idProjeto;
 		this.titulo = titulo;
 		this.descricao = descricao;
@@ -27,6 +32,7 @@ public class ProjectDTO {
 		this.dataFim = dataFim;
 		this.aprovado = aprovado;
 		this.emailUsuario = emailUsuario;
+		this.usuarios = usuarios;
 	}
 	
 	public Project toProject() {
@@ -34,7 +40,15 @@ public class ProjectDTO {
 	}
 	
     public static ProjectDTO toDTO(Project project) {
-        return new ProjectDTO(project.getIdProjeto(), project.getTitulo(), project.getDescricao(), project.getOrcamento(), project.getDataInicio(), project.getDataFim(), project.isAprovado(), null);
+        return new ProjectDTO(project.getIdProjeto(), project.getTitulo(), project.getDescricao(), project.getOrcamento(), project.getDataInicio(), project.getDataFim(), project.isAprovado(), null, converterLista(project.getUsers()));
+    }
+    
+    public static List<UserProjectSaveDTO> converterLista(List<User> usuarios){
+    	List<UserProjectSaveDTO> users = new ArrayList<>();
+    	for (User user : usuarios) {
+    		users.add(UserProjectSaveDTO.toUserProjectSaveDTO(user));
+    	}
+    	return users;
     }
 	
 
@@ -101,4 +115,13 @@ public class ProjectDTO {
 	public void setEmailUsuario(String emailUsuario) {
 		this.emailUsuario = emailUsuario;
 	}
+
+	public List<UserProjectSaveDTO> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<UserProjectSaveDTO> usuarios) {
+		this.usuarios = usuarios;
+	}
+	
 }

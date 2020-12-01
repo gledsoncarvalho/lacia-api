@@ -61,7 +61,6 @@ public class UserRegistrationService {
 	}
 	
 	public User obterUsuario(String email, String token) throws Exception {
-		System.out.println("email:: " + email);
 		if (!token.isEmpty() && tokenService.validate(token)) {
 			System.out.println("ENTROU");
 			User user = userRepository.findByEmail(email);

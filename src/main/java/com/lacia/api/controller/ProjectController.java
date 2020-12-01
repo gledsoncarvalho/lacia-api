@@ -17,19 +17,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lacia.api.dto.ProjectDTO;
 import com.lacia.api.dto.UserDTO;
+import com.lacia.api.dto.UserProjectSaveDTO;
 import com.lacia.api.service.ProjectService;
+import com.lacia.api.service.UserProjectService;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class ProjectController {
 
 	private ProjectService projectService;
+	private UserProjectService userProjectService;
 
 	@Autowired
-	public ProjectController(ProjectService projectService) {
+	public ProjectController(ProjectService projectService, UserProjectService userProjectService) {
 		this.projectService = projectService;
+		this.userProjectService = userProjectService;
 	}
 	
-	@CrossOrigin
 	@PostMapping("/projeto/cadastrar")
 	public ResponseEntity<Object> cadastrar(@RequestBody ProjectDTO projectDTO,
 			@RequestHeader String Authorization) {
@@ -42,7 +46,6 @@ public class ProjectController {
 		}
 	}
 	
-	@CrossOrigin
 	@GetMapping("/projeto/meus/{email}")
 	public ResponseEntity<Object> obterProjetoPorUsuario (@PathVariable("email") String email, @RequestHeader String Authorization) {
 		try {
@@ -53,7 +56,6 @@ public class ProjectController {
 		}
 	}
 	
-	@CrossOrigin
 	@GetMapping("/projeto/todos/{email}")
 	public ResponseEntity<Object> obterProjetos (@PathVariable("email") String email, @RequestHeader String Authorization) {
 		try {
@@ -64,7 +66,6 @@ public class ProjectController {
 		}
 	}
 	
-	@CrossOrigin
 	@PutMapping("projeto/aprovar/{idProjeto}")
 	public ResponseEntity<Object> aprovarProjeto(@PathVariable("idProjeto") Integer idProjeto, @RequestHeader String Authorization) {
 		try {
@@ -76,7 +77,6 @@ public class ProjectController {
 		}
 	}
 	
-	@CrossOrigin
 	@PutMapping("projeto/reprovar/{idProjeto}")
 	public ResponseEntity<Object> reprovarProjeto(@PathVariable("idProjeto") Integer idProjeto, @RequestHeader String Authorization) {
 		try {
@@ -88,7 +88,6 @@ public class ProjectController {
 		}
 	}
 	
-	@CrossOrigin
 	@GetMapping("/projeto/todos")
 	public ResponseEntity<Object> obterProjetosCadastrados (@RequestHeader String Authorization) {
 		try {
@@ -98,4 +97,18 @@ public class ProjectController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERRO AO CONSULTAR OS PROJETOS");
 		}
 	}
+	
+	@PostMapping("/projeto/usuario")
+	public ResponseEntity<Object> cadastrarUsuarioProjeto(@RequestBody UserProjectSaveDTO userProjectSaveDTO,
+			@RequestHeader String Authorization) {
+		try {
+		    userProjectService.cadastrarUsuarioProjeto(userProjectSaveDTO, Authorization);
+			return ResponseEntity.status(HttpStatus.CREATED).body(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+		}
+	}
+	
+	
 }

@@ -1,6 +1,8 @@
 package com.lacia.api.model;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -10,7 +12,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -43,6 +47,12 @@ public class User {
     private Boolean isAprovado;
     @Transient
     private String token;
+    
+    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    	    private List<Project> projects = new ArrayList<>();
+    //@OneToMany(mappedBy = "project1")
+    //private List<Project> projects;
+
     
     public User(Integer idUsuario, String nome, String email, String telefone, Date dataNascimento) {
     	this.idUsuario = idUsuario;
