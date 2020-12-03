@@ -30,11 +30,11 @@ public class UserProjectService {
 	public void cadastrarUsuarioProjeto(UserProjectSaveDTO userProjectSaveDTO, String token) throws Exception{
 		if (!token.isEmpty() && tokenService.validate(token)) {
 			User user = userRepository.findId(userProjectSaveDTO.getIdUsuario());
-			Project project = projectRepository.findById(userProjectSaveDTO.getIdProjeto()).get();
-			UserProject userProject = userProjectSaveDTO.toUserProject();
-			userProject.setUser(user);
-			userProject.setProject(project);
-			userProjectRepository.save(userProject);
+//			Project project = projectRepository.findById(userProjectSaveDTO.getIdProjeto()).get();
+//			UserProject userProject = userProjectSaveDTO.toUserProject();
+//			userProject.setUser(user);
+//			userProject.setProject(project);
+//			userProjectRepository.save(userProject);
 		} else {
 			throw new Exception();
 		}

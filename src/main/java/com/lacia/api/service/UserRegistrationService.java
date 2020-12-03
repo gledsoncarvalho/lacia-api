@@ -1,13 +1,15 @@
 package com.lacia.api.service;
 
-
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lacia.api.dto.ProjectDTO;
 import com.lacia.api.dto.UserDTO;
 import com.lacia.api.dto.UserPasswordDTO;
+import com.lacia.api.dto.UserProjectSaveDTO;
 import com.lacia.api.dto.UserRegistrationDTO;
 import com.lacia.api.exception.InvalidLoginException;
 import com.lacia.api.model.User;
@@ -59,7 +61,7 @@ public class UserRegistrationService {
 			throw new Exception();
 		}
 	}
-	
+
 	public User obterUsuario(String email, String token) throws Exception {
 		if (!token.isEmpty() && tokenService.validate(token)) {
 			System.out.println("ENTROU");
@@ -69,18 +71,18 @@ public class UserRegistrationService {
 			throw new Exception();
 		}
 	}
-	
+
 	public User atualizarImagem(Integer id, byte[] fotoPerfil, String token) throws Exception {
 		if (!token.isEmpty() && tokenService.validate(token)) {
 			User user = userRepository.findId(id);
-		    user.setFotoPerfil(fotoPerfil);
+			user.setFotoPerfil(fotoPerfil);
 			user.setToken(tokenService.generateToken(user));
-		    return userRepository.save(user);
+			return userRepository.save(user);
 		} else {
 			throw new Exception();
 		}
 	}
-	
+
 	public void atualizarSenha(Integer id, UserPasswordDTO usuario, String token) throws Exception {
 		if (!token.isEmpty() && tokenService.validate(token)) {
 			User user = userRepository.findByIdAndPassword(id, usuario.getSenhaAtual());
@@ -94,7 +96,7 @@ public class UserRegistrationService {
 			throw new Exception();
 		}
 	}
-	
+
 	public void solicitarAcessoPesquisador(UserDTO user) throws Exception {
 		User usuario = user.toUser();
 		usuario.setSenha("lacia123");
@@ -102,12 +104,21 @@ public class UserRegistrationService {
 		usuario.setDataNascimento(new Date(System.currentTimeMillis()));
 		userRepository.save(usuario);
 	}
-	
+
 	public void recuperarSenha(String email) throws Exception {
 		User user = userRepository.findByEmail(email);
 		if (user == null) {
 			throw new Exception();
 		}
 	}
-	
+
+	public List<UserProjectSaveDTO> obterTodosUsuarios(String token) throws Exception {
+		if (!token.isEmpty() && tokenService.validate(token)) {
+			List<UserProjectSaveDTO> usuarios = ProjectDTO.converterLista(userRepository.findAllAprovados());
+			return usuarios;
+		} else {
+			throw new Exception();
+		}
+	}
+
 }

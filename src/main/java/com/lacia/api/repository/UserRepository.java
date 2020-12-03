@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lacia.api.model.User;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 	
@@ -24,6 +23,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     
     @Query("select u from User u where u.tipoUsuario = :tipoUsuario and u.isAprovado is null")
     List<User> findAll(@Param("tipoUsuario") char tipoUsuario);
+    
+    @Query("select u from User u where u.isAprovado = true")
+    List<User> findAllAprovados();
     
     @Query("select u from User u where u.idUsuario = :idUsuario and u.senha = :senha")
     User findByIdAndPassword(@Param("idUsuario") Integer idUsuario, @Param("senha") String senha);

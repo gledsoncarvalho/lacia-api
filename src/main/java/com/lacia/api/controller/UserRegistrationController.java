@@ -1,19 +1,16 @@
 package com.lacia.api.controller;
 
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lacia.api.dto.UserAutheticatedDTO;
@@ -28,12 +25,10 @@ import com.lacia.api.service.UserRegistrationService;
 public class UserRegistrationController {
 
 	private UserRegistrationService userRegistrationService;
-	private TokenService tokenService;
 
 	@Autowired
 	public UserRegistrationController(UserRegistrationService userRegistrationService, TokenService tokenService) {
 		this.userRegistrationService = userRegistrationService;
-		this.tokenService = tokenService;
 	}
 
 	public UserRegistrationController() {
@@ -130,5 +125,15 @@ public class UserRegistrationController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 		}
+	}
+	
+	@GetMapping("/usuario/todos/aprovados")
+	public ResponseEntity<Object> obterTodosUsuarios(@RequestHeader String Authorization) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(this.userRegistrationService.obterTodosUsuarios(Authorization));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+		}
+		
 	}
 }
