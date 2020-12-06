@@ -20,6 +20,12 @@ public class UserProjectSaveDTO {
 	public static UserProjectSaveDTO toUserProjectSaveDTO(User user) {
 		return new UserProjectSaveDTO(user.getIdUsuario(), user.getNome(), user.getFotoPerfil());
 	}
+	
+	public static User toUser(UserProjectSaveDTO usuarioDTO) {
+		User usuario = new User();
+		usuario.setIdUsuario(usuarioDTO.getIdUsuario());
+		return usuario;
+	}
 
 	public Integer getIdUsuario() {
 		return idUsuario;

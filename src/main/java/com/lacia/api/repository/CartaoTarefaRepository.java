@@ -10,6 +10,6 @@ import com.lacia.api.model.CartaoTarefa;
 
 public interface CartaoTarefaRepository extends JpaRepository<CartaoTarefa, Integer>{
 
-	@Query("select ct from CartaoTarefa ct where ct.listaTarefa.idListaTarefa = :idListaTarefa")
+	@Query("select ct from CartaoTarefa ct where ct.idListaTarefa = :idListaTarefa")
 	List<CartaoTarefa> findAllByIdListaTarefa(@Param("idListaTarefa") Integer idListaTarefa);
 }

@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -40,6 +41,9 @@ public class Project {
     @JoinColumn(name = "usuario_id_usuario")
     private User user;
     
+    @OneToMany(targetEntity = Etiqueta.class, mappedBy = "idProjeto")
+	private List<Project> projetos = new ArrayList<>();
+    
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name = "usuario_projeto",
             joinColumns = {
@@ -49,10 +53,7 @@ public class Project {
                     @JoinColumn(name = "usuario_id_usuario", referencedColumnName = "idUsuario",
                             nullable = false, updatable = false)})
     private List<User> users = new ArrayList<>();
-    
-    /*@OneToMany(mappedBy = "user1")
-    private List<User> users;*/
-	
+
     public Project() {
     	
     }
@@ -140,4 +141,22 @@ public class Project {
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
+
+	public Boolean getIsAprovado() {
+		return isAprovado;
+	}
+
+	public void setIsAprovado(Boolean isAprovado) {
+		this.isAprovado = isAprovado;
+	}
+
+	public List<Project> getProjetos() {
+		return projetos;
+	}
+
+	public void setProjetos(List<Project> projetos) {
+		this.projetos = projetos;
+	}
+	
+	
 }

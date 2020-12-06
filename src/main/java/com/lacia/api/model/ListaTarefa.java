@@ -19,7 +19,7 @@ public class ListaTarefa {
 	private String nome;
 	private Integer posicao;
 	
-	@OneToMany(mappedBy = "listaTarefa")
+	@OneToMany(targetEntity = CartaoTarefa.class)
 	private List<CartaoTarefa> cartoesTarefas;
 	@ManyToOne(targetEntity = Project.class)
     @JoinColumn(name = "projeto_id_projeto")

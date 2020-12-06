@@ -50,8 +50,6 @@ public class User {
     
     @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
     	    private List<Project> projects = new ArrayList<>();
-    //@OneToMany(mappedBy = "project1")
-    //private List<Project> projects;
 
     
     public User(Integer idUsuario, String nome, String email, String telefone, Date dataNascimento) {

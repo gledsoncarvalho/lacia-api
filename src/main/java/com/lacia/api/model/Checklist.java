@@ -8,8 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "checklist")
 public class Checklist {
 
 	@Id
@@ -20,18 +22,24 @@ public class Checklist {
 	private Integer checkItens;
 	@Column(name = "check_items_checked")
 	private Integer checkItensChecked;
+	@Column(name = "cartao_tarefa_id_cartao_tarefa")
+	private Integer idCartaoTarefa;
 
 	@OneToMany(targetEntity = ItemChecklist.class)
     private List<ItemChecklist> itens;
 	
 	public Checklist() { }
 
-	public Checklist(Integer idChecklist, String titulo, Integer checkItens, Integer checkItensChecked) {
+	public Checklist(Integer idChecklist, String titulo, Integer checkItens, Integer checkItensChecked,
+			Integer idCartaoTarefa, List<ItemChecklist> itens) {
 		this.idChecklist = idChecklist;
 		this.titulo = titulo;
 		this.checkItens = checkItens;
 		this.checkItensChecked = checkItensChecked;
+		this.idCartaoTarefa = idCartaoTarefa;
+		this.itens = itens;
 	}
+
 
 	public Integer getIdChecklist() {
 		return idChecklist;
@@ -72,5 +80,16 @@ public class Checklist {
 	public void setItens(List<ItemChecklist> itens) {
 		this.itens = itens;
 	}
+
+
+	public Integer getIdCartaoTarefa() {
+		return idCartaoTarefa;
+	}
+
+
+	public void setIdCartaoTarefa(Integer idCartaoTarefa) {
+		this.idCartaoTarefa = idCartaoTarefa;
+	}
+	
 	
 }

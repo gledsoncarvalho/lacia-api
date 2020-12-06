@@ -1,5 +1,6 @@
 package com.lacia.api.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,17 +16,28 @@ public class Etiqueta {
 	private Integer idEtiqueta;
 	private String nome;
 	private String cor;
-	@ManyToOne(targetEntity = Project.class)
-    @JoinColumn(name = "projeto_id_usuario")
-    private Project project;
+	@Column(name = "projeto_id_projeto")
+	private Integer idProjeto;
+//	@ManyToOne(targetEntity = Project.class)
+//	@JoinColumn(name = "idProjeto", referencedColumnName = "idProjeto", insertable = false, updatable = false)
+//    //@JoinColumn(name = "projeto_id_usuario", referencedColumnName = "idProjeto")
+//    private Project project;
 	
 	public Etiqueta() { }
 
-	public Etiqueta(Integer idEtiqueta, String nome, String cor, Project project) {
+	public Etiqueta(Integer idEtiqueta, String nome, String cor, Integer idProjeto) {
 		this.idEtiqueta = idEtiqueta;
 		this.nome = nome;
 		this.cor = cor;
-		this.project = project;
+		this.idProjeto = idProjeto;
+	}
+
+	public Integer getIdProjeto() {
+		return idProjeto;
+	}
+
+	public void setIdProjeto(Integer idProjeto) {
+		this.idProjeto = idProjeto;
 	}
 
 	public Integer getIdEtiqueta() {
@@ -50,13 +62,5 @@ public class Etiqueta {
 
 	public void setCor(String cor) {
 		this.cor = cor;
-	}
-
-	public Project getProject() {
-		return project;
-	}
-
-	public void setProject(Project project) {
-		this.project = project;
 	}
 }

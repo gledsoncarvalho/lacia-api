@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class CartaoTarefa {
@@ -26,49 +28,45 @@ public class CartaoTarefa {
 	private String descricao;
 	private Integer posicao;
 	private Date dataEntrega;
-	@ManyToOne(targetEntity = ListaTarefa.class)
-    @JoinColumn(name = "lista_tarefa_id_lista_tarefa")
-    private ListaTarefa listaTarefa;
-	
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "etiqueta_has_cartao_tarefa",
-    		joinColumns = {
-    				 @JoinColumn(name = "cartao_tarefa_id_cartao_tarefa", referencedColumnName = "idCartaoTarefa",
-                             nullable = false, updatable = false)},
-            inverseJoinColumns = {
-            		@JoinColumn(name = "etiqueta_id_etiqueta", referencedColumnName = "idEtiqueta",
-                            nullable = false, updatable = false)})
-    private List<Etiqueta> etiquetas = new ArrayList<>();
-    
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "cartao_usuario",
-    		joinColumns = {
-    				 @JoinColumn(name = "cartao_tarefa_id_cartao_tarefa", referencedColumnName = "idCartaoTarefa",
-                             nullable = false, updatable = false)},
-            inverseJoinColumns = {
-            		@JoinColumn(name = "usuario_id_usuario", referencedColumnName = "idUsuario",
-                            nullable = false, updatable = false)})
-    private List<User> users = new ArrayList<>();
-    
-    @OneToMany(targetEntity = Anexo.class)
-    private List<Anexo> anexos;
-	
-    @OneToMany(targetEntity = Checklist.class)
-    private List<Checklist> checklists;
-    
-	public CartaoTarefa() { }
+	@Column(name = "lista_tarefa_id_lista_tarefa")
+	private Integer idListaTarefa;
 
-	
+//	@ManyToOne(targetEntity = ListaTarefa.class)
+//	@JoinColumn(name = "idListaTarefa", insertable = false, updatable = false)
+//	// @JoinColumn(name = "lista_tarefa_id_lista_tarefa", referencedColumnName =
+//	// "id_lista_tarefa")
+//	private ListaTarefa listaTarefa;
+
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+	@JoinTable(name = "etiqueta_has_cartao_tarefa", joinColumns = {
+			@JoinColumn(name = "cartao_tarefa_id_cartao_tarefa", referencedColumnName = "idCartaoTarefa") }, inverseJoinColumns = {
+					@JoinColumn(name = "etqueta_id_etiqueta", referencedColumnName = "idEtiqueta") })
+	private List<Etiqueta> etiquetas = new ArrayList<>();
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@JoinTable(name = "cartao_usuario", joinColumns = {
+			@JoinColumn(name = "cartao_tarefa_id_cartao_tarefa", referencedColumnName = "idCartaoTarefa", insertable = false, updatable = true) }, inverseJoinColumns = {
+					@JoinColumn(name = "usuario_projeto_id_usuario_projeto", referencedColumnName = "idUsuario", insertable = false, updatable = true) })
+	private List<User> users = new ArrayList<>();
+
+	@OneToMany(targetEntity = Anexo.class, mappedBy = "idCartaoTarefa")
+	private List<Anexo> anexos;
+
+	@OneToMany(targetEntity = Checklist.class, mappedBy = "idCartaoTarefa")
+	private List<Checklist> checklists;
+
+	public CartaoTarefa() {
+	}
 
 	public CartaoTarefa(Integer idCartaoTarefa, String titulo, String descricao, Integer posicao, Date dataEntrega,
-			ListaTarefa listaTarefa, List<Etiqueta> etiquetas, List<User> users, List<Anexo> anexos,
-			List<Checklist> checklists) {
+			Integer idListaTarefa, List<Etiqueta> etiquetas, List<User> users,
+			List<Anexo> anexos, List<Checklist> checklists) {
 		this.idCartaoTarefa = idCartaoTarefa;
 		this.titulo = titulo;
 		this.descricao = descricao;
 		this.posicao = posicao;
 		this.dataEntrega = dataEntrega;
-		this.listaTarefa = listaTarefa;
+		this.idListaTarefa = idListaTarefa;
 		this.etiquetas = etiquetas;
 		this.users = users;
 		this.anexos = anexos;
@@ -115,13 +113,13 @@ public class CartaoTarefa {
 		this.dataEntrega = dataEntrega;
 	}
 
-	public ListaTarefa getListaTarefa() {
-		return listaTarefa;
-	}
-
-	public void setListaTarefa(ListaTarefa listaTarefa) {
-		this.listaTarefa = listaTarefa;
-	}
+//	public ListaTarefa getListaTarefa() {
+//		return listaTarefa;
+//	}
+//
+//	public void setListaTarefa(ListaTarefa listaTarefa) {
+//		this.listaTarefa = listaTarefa;
+//	}
 
 	public List<Etiqueta> getEtiquetas() {
 		return etiquetas;
@@ -154,4 +152,13 @@ public class CartaoTarefa {
 	public void setChecklists(List<Checklist> checklists) {
 		this.checklists = checklists;
 	}
+
+	public Integer getIdListaTarefa() {
+		return idListaTarefa;
+	}
+
+	public void setIdListaTarefa(Integer idListaTarefa) {
+		this.idListaTarefa = idListaTarefa;
+	}
+
 }

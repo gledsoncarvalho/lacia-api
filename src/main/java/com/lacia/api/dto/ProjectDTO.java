@@ -8,8 +8,6 @@ import java.util.List;
 import com.lacia.api.model.Project;
 import com.lacia.api.model.User;
 
-import net.bytebuddy.asm.Advice.This;
-
 public class ProjectDTO {
 
     private Integer idProjeto;
