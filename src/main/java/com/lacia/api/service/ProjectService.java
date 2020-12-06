@@ -100,4 +100,19 @@ public class ProjectService {
 			throw new Exception();
 		}
 	}
+	
+	public List<ProjectDTO> obterProjetosPorUsuarioMembro(String email, String token) throws Exception {
+		if (!token.isEmpty() && tokenService.validate(token)) {
+			User user = userRepository.findByEmail(email);
+			Iterator iterator = projectRepository.findAllByUserOrMember(user).iterator();
+			List<ProjectDTO> projetos = new ArrayList<>();
+			while (iterator.hasNext()) {
+				Project projeto = (Project) iterator.next();
+				projetos.add(ProjectDTO.toDTO(projeto));
+			}
+			return projetos;
+		} else {
+			throw new Exception();
+		}
+	}
 }

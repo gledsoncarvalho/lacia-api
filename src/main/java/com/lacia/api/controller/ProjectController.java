@@ -98,6 +98,16 @@ public class ProjectController {
 		}
 	}
 	
+	@GetMapping("/projeto/membros/{email}")
+	public ResponseEntity<Object> obterProjetosPorUsuarioMembro(@PathVariable("email") String email, @RequestHeader String Authorization) {
+		try {
+			List<ProjectDTO> projetos = projectService.obterProjetosPorUsuarioMembro(email, Authorization);
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(projetos);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERRO AO CONSULTAR OS PROJETOS");
+		}
+	}
+	
 	@PostMapping("/projeto/usuario")
 	public ResponseEntity<Object> cadastrarUsuarioProjeto(@RequestBody UserProjectSaveDTO userProjectSaveDTO,
 			@RequestHeader String Authorization) {
