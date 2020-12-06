@@ -9,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lacia.api.model.Project;
-import com.lacia.api.model.User;
 
 public interface ProjectRepository extends JpaRepository<Project, Integer> {
 

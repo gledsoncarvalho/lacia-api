@@ -28,7 +28,6 @@ public class CartaoTarefaService {
 		if (!token.isEmpty() && tokenService.validate(token)) {
 			CartaoTarefa cartaoTarefa = CartaoTarefaDTO.toCartaoTarefa(cartaoTarefaDTO);
 			cartaoTarefa = this.cartaoTarefaRepository.save(cartaoTarefa);
-			//System.out.println("ID AQUI:: " + cartaoTarefa.getListaTarefa().getIdListaTarefa());
 			System.out.println("ID AQUI2:: " + cartaoTarefaDTO.getIdListaTarefa());
 			return this.cartaoTarefaRepository.findAllByIdListaTarefa(cartaoTarefaDTO.getIdListaTarefa());
 		} else {

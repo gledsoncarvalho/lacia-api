@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Etiqueta {
@@ -18,10 +16,6 @@ public class Etiqueta {
 	private String cor;
 	@Column(name = "projeto_id_projeto")
 	private Integer idProjeto;
-//	@ManyToOne(targetEntity = Project.class)
-//	@JoinColumn(name = "idProjeto", referencedColumnName = "idProjeto", insertable = false, updatable = false)
-//    //@JoinColumn(name = "projeto_id_usuario", referencedColumnName = "idProjeto")
-//    private Project project;
 	
 	public Etiqueta() { }
 

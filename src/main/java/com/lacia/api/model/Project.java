@@ -42,7 +42,7 @@ public class Project {
     private User user;
     
     @OneToMany(targetEntity = Etiqueta.class, mappedBy = "idProjeto")
-	private List<Project> projetos = new ArrayList<>();
+	private List<Etiqueta> etiquetas = new ArrayList<>();
     
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name = "usuario_projeto",
@@ -150,12 +150,12 @@ public class Project {
 		this.isAprovado = isAprovado;
 	}
 
-	public List<Project> getProjetos() {
-		return projetos;
+	public List<Etiqueta> getEtiquetas() {
+		return etiquetas;
 	}
 
-	public void setProjetos(List<Project> projetos) {
-		this.projetos = projetos;
+	public void setEtiquetas(List<Etiqueta> etiquetas) {
+		this.etiquetas = etiquetas;
 	}
 	
 	

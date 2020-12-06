@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lacia.api.dto.ProjectDTO;
-import com.lacia.api.dto.UserDTO;
-import com.lacia.api.dto.UserProjectSaveDTO;
 import com.lacia.api.model.Project;
 import com.lacia.api.model.User;
 import com.lacia.api.repository.ProjectRepository;
@@ -102,5 +100,4 @@ public class ProjectService {
 			throw new Exception();
 		}
 	}
-	
 }
