@@ -109,10 +109,10 @@ public class ProjectController {
 	}
 	
 	@PostMapping("/projeto/usuario")
-	public ResponseEntity<Object> cadastrarUsuarioProjeto(@RequestBody UserProjectSaveDTO userProjectSaveDTO,
+	public ResponseEntity<Object> cadastrarUsuarioProjeto(@RequestBody ProjectDTO projectDTO,
 			@RequestHeader String Authorization) {
 		try {
-		    userProjectService.cadastrarUsuarioProjeto(userProjectSaveDTO, Authorization);
+		    userProjectService.cadastrarUsuarioProjeto(projectDTO, Authorization);
 			return ResponseEntity.status(HttpStatus.CREATED).body(true);
 		} catch (Exception e) {
 			e.printStackTrace();

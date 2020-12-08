@@ -2,6 +2,7 @@ package com.lacia.api.service;
 
 import org.springframework.stereotype.Service;
 
+import com.lacia.api.dto.ProjectDTO;
 import com.lacia.api.dto.UserProjectSaveDTO;
 import com.lacia.api.model.Project;
 import com.lacia.api.model.User;
@@ -27,14 +28,13 @@ public class UserProjectService {
 	};
 	
 	
-	public void cadastrarUsuarioProjeto(UserProjectSaveDTO userProjectSaveDTO, String token) throws Exception{
+	public void cadastrarUsuarioProjeto(ProjectDTO projectDTO, String token) throws Exception{
 		if (!token.isEmpty() && tokenService.validate(token)) {
-			User user = userRepository.findId(userProjectSaveDTO.getIdUsuario());
-//			Project project = projectRepository.findById(userProjectSaveDTO.getIdProjeto()).get();
-//			UserProject userProject = userProjectSaveDTO.toUserProject();
-//			userProject.setUser(user);
-//			userProject.setProject(project);
-//			userProjectRepository.save(userProject);
+			Project projetoCompleto = projectRepository.findById(projectDTO.getIdProjeto()).get();
+			Project projeto = projectDTO.toProject();
+			projeto.setUser(projetoCompleto.getUser());
+			projeto.setUsers(ProjectDTO.converterListaParaUser(projectDTO.getUsuarios()));
+			projectRepository.save(projeto);
 		} else {
 			throw new Exception();
 		}

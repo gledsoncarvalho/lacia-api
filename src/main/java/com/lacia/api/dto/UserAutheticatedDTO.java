@@ -1,7 +1,5 @@
 package com.lacia.api.dto;
 
-import java.util.Base64;
-
 import com.lacia.api.model.User;
 
 

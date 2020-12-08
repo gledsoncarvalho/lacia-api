@@ -126,12 +126,13 @@ public class UserRegistrationController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 		}
 	}
-	
+	@CrossOrigin
 	@GetMapping("/usuario/todos/aprovados")
 	public ResponseEntity<Object> obterTodosUsuarios(@RequestHeader String Authorization) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(this.userRegistrationService.obterTodosUsuarios(Authorization));
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 		}
 		

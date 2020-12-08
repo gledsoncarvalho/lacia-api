@@ -50,6 +50,14 @@ public class ProjectDTO {
     }
 	
 
+    public static List<User> converterListaParaUser(List<UserProjectSaveDTO> usuarios){
+    	List<User> users = new ArrayList<>();
+    	for (UserProjectSaveDTO user : usuarios) {
+    		users.add(UserProjectSaveDTO.toUser(user));
+    	}
+    	return users;
+    }
+
 	public Integer getIdProjeto() {
 		return idProjeto;
 	}
