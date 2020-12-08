@@ -16,9 +16,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
+@Table(name = "cartao_tarefa")
 public class CartaoTarefa {
 
 	@Id
@@ -30,12 +32,6 @@ public class CartaoTarefa {
 	private Date dataEntrega;
 	@Column(name = "lista_tarefa_id_lista_tarefa")
 	private Integer idListaTarefa;
-
-//	@ManyToOne(targetEntity = ListaTarefa.class)
-//	@JoinColumn(name = "idListaTarefa", insertable = false, updatable = false)
-//	// @JoinColumn(name = "lista_tarefa_id_lista_tarefa", referencedColumnName =
-//	// "id_lista_tarefa")
-//	private ListaTarefa listaTarefa;
 
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
 	@JoinTable(name = "etiqueta_has_cartao_tarefa", joinColumns = {

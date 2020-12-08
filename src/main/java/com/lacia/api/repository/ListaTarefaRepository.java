@@ -10,6 +10,6 @@ import com.lacia.api.model.ListaTarefa;
 
 public interface ListaTarefaRepository extends JpaRepository<ListaTarefa, Integer>{
 
-	@Query("select lt from ListaTarefa lt where lt.project.idProjeto = :idProjeto")
+	@Query("select lt from ListaTarefa lt where lt.idProjeto = :idProjeto")
 	List<ListaTarefa> findAllByIdProjeto(@Param("idProjeto") Integer idProjeto);
 }

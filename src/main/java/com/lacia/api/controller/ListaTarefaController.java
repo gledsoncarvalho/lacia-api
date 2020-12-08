@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lacia.api.model.ListaTarefa;
@@ -27,7 +28,7 @@ public class ListaTarefaController {
 	}
 	
 	@PostMapping("/listaTarefa")
-	public ResponseEntity<Object> cadastrarTarefa(@RequestBody ListaTarefa listaTarefa, String Authorization) {
+	public ResponseEntity<Object> cadastrarTarefa(@RequestBody ListaTarefa listaTarefa, @RequestHeader String Authorization) {
 		try {
 			return ResponseEntity.status(HttpStatus.CREATED).body(this.listaTarefaService.cadastrarListaTarefa(listaTarefa, Authorization));
 		} catch (Exception e) {
@@ -36,16 +37,17 @@ public class ListaTarefaController {
 	}
 	
 	@GetMapping("/listaTarefa/todos/{idProjeto}")
-	public ResponseEntity<Object> obterTodosListaTarefa(@PathVariable("idProjeto") Integer idProjeto, String Authorization) {
+	public ResponseEntity<Object> obterTodosListaTarefa(@PathVariable("idProjeto") Integer idProjeto, @RequestHeader String Authorization) {
 		try {
 			return ResponseEntity.status(HttpStatus.CREATED).body(this.listaTarefaService.obterListasTarefas(idProjeto, Authorization));
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("NÃO FOI POSSÍVEL GRAVAR LISTA");
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("NÃO FOI POSSÍVEL OBTER LISTA");
 		}
 	}
 	
 	@DeleteMapping("/listaTarefa/excluir/{idListaTarefa}")
-	public ResponseEntity<Object> excluirListaTarefa(@PathVariable("idListaTarefa") Integer idListaTarefa, String Authorization) {
+	public ResponseEntity<Object> excluirListaTarefa(@PathVariable("idListaTarefa") Integer idListaTarefa, @RequestHeader String Authorization) {
 		try {
 			this.listaTarefaService.excluirListaTarefa(idListaTarefa, Authorization);
 			return ResponseEntity.status(HttpStatus.CREATED).body(true);

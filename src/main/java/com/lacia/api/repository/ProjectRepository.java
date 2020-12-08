@@ -32,6 +32,6 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
     @Query("select p from Project p where p.isAprovado = true")
     List<Project> findAllCadastrados();
     
-    @Query("select p from Project p inner join UserProject up ON up.project1 = p where p.user = :user OR up.user1 = :user")
+    @Query("select distinct p from Project p inner join UserProject up ON up.project1 = p where p.isAprovado = true and (p.user = :user OR up.user1 = :user)")
     List<Project> findAllByUserOrMember(@Param("user") User user);   
 }
